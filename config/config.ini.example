@@ -1,0 +1,4 @@
+[Api]
+baseUrl = 'http://localhost/api'
+authUser = 'admin'
+authPass = 'admin'

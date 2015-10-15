@@ -4,8 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bbb9d2b28e4c659a8555e3ee9d66f9a5",
+    "hash": "02c85601286ba1f292ce583fb9a592b9",
     "packages": [
+        {
+            "name": "fkooman/ini",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fkooman/php-lib-ini.git",
+                "reference": "b380a88e42ce2184e822cc8b89223cd777c484be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fkooman/php-lib-ini/zipball/b380a88e42ce2184e822cc8b89223cd777c484be",
+                "reference": "b380a88e42ce2184e822cc8b89223cd777c484be",
+                "shasum": ""
+            },
+            "require": {
+                "ext-spl": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "fkooman\\Ini\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "François Kooman",
+                    "email": "fkooman@tuxed.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle INI configuration files",
+            "time": "2015-07-13 12:06:01"
+        },
         {
             "name": "fkooman/json",
             "version": "1.0.0",

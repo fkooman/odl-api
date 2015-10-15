@@ -1,19 +1,24 @@
 <?php
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use fkooman\Json\Json;
 use fkooman\ODL\ApiCall;
+use fkooman\Ini\IniReader;
 
-// CONFIG
-$apiFile = __DIR__.'/data/f1.json';
+$iniReader = IniReader::fromFile(
+    dirname(__DIR__).'/config/config.ini'
+);
+
+$apiFile = dirname(__DIR__).'/data/f1.json';
 $targetEther = 'ff:ff:42:ff:ff:00';
-$putUrl = 'http://localhost/foo';
-$user = 'admin';
-$pass = 'admin';
 
-// APP
+$baseUrl = $iniReader->v('Api', 'baseUrl');
+$authUser = $iniReader->v('Api', 'authUser');
+$authPass = $iniReader->v('Api', 'authPass');
+$apiUrl = $baseUrl.'/foo/bar';
+
 try {
     $apiCall = new ApiCall($apiFile);
     $apiCall->setEther($targetEther);
@@ -21,12 +26,12 @@ try {
 
     $client = new Client();
     $response = $client->put(
-        $putUrl,
+        $apiUrl,
         array(
             'body' => $apiData,
             'auth' => array(
-                $user,
-                $pass,
+                $authUser,
+                $authPass,
             ),
         )
     );

@@ -8,7 +8,7 @@ Install [Composer](https://getcomposer.org).
 ### Fedora
 Install Composer:
 
-    $ sudo dnf -y install composer git
+    $ sudo dnf -y install composer
 
 # Installation
 
@@ -16,7 +16,13 @@ Install Composer:
 	$ cd odl-api
 	$ composer install
 
+# Configuration
+
+    $ cp config/config.ini.example config/config.ini
+
+Now modify the `config.ini` file.
+
 # Running
 	
-	$ php f1.php
+	$ php bin/f1.php
 
