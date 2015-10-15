@@ -12,7 +12,7 @@
     },
     "description": "ODL API manager",
     "license": "Apache-2.0",
-    "name": "fkooman/sc-api",
+    "name": "fkooman/odl-api",
     "require": {
         "fkooman/json": "^1.0.0",
         "guzzlehttp/guzzle": "~5.3"
