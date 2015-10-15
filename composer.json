@@ -1,0 +1,20 @@
+{
+    "authors": [
+        {
+            "email": "fkooman@tuxed.net",
+            "name": "Fran\u00e7ois Kooman"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "fkooman\\ODL\\": "src/"
+        }
+    },
+    "description": "ODL API manager",
+    "license": "Apache-2.0",
+    "name": "fkooman/sc-api",
+    "require": {
+        "fkooman/json": "^1.0.0",
+        "guzzlehttp/guzzle": "~5.3"
+    }
+}

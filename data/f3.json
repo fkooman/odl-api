@@ -1,0 +1,54 @@
+{
+    "flow": [
+        {
+            "flow-name": "vm-to-server",
+            "id": "3",
+            "instructions": {
+                "instruction": [
+                    {
+                        "apply-actions": {
+                            "action": [
+                                {
+                                    "order": "1",
+                                    "set-field": {
+                                        "vlan-match": {
+                                            "vlan-id": {
+                                                "vlan-id": "3174",
+                                                "vlan-id-present": "true"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "order": "2",
+                                    "output-action": {
+                                        "output-node-connector": "78"
+                                    }
+                                }
+                            ]
+                        },
+                        "order": "1"
+                    }
+                ]
+            },
+            "match": {
+                "ethernet-match": {
+                    "ethernet-destination": {
+                        "address": "00:60:dd:46:13:84"
+                    },
+                    "ethernet-source": {
+                        "address": "fa:16:3e:52:52:d6"
+                    }
+                },
+                "in-port": "32",
+                "vlan-match": {
+                    "vlan-id": {
+                        "vlan-id": "101",
+                        "vlan-id-present": "true"
+                    }
+                }
+            },
+            "table_id": "0"
+        }
+    ]
+}
