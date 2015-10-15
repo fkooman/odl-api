@@ -36,7 +36,7 @@ try {
             'headers' => array(
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-            )
+            ),
         )
     );
 
@@ -48,7 +48,6 @@ try {
     #Server: Jetty(8.1.15.v20140411)
 
     #[fkooman@noname sc-api]$ 
-
 } catch (Exception $e) {
     echo $e->getMessage().PHP_EOL;
     exit(1);
