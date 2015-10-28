@@ -1,0 +1,44 @@
+{
+    "flow": [
+        {
+            "flow-name": "arp-receiver-to-loop",
+            "id": "3",
+            "instructions": {
+                "instruction": [
+                    {
+                        "apply-actions": {
+                            "action": [
+                                {
+                                    "order": "1",
+                                    "pop-vlan-action": {}
+                                },
+                                {
+                                    "order": "2",
+                                    "output-action": {
+                                        "output-node-connector": "40"
+                                    }
+                                }
+                            ]
+                        },
+                        "order": "1"
+                    }
+                ]
+            },
+            "match": {
+                "ethernet-match": {
+                    "ethernet-type": {
+                        "type": "0x806"
+                    }
+                },
+                "in-port": "78",
+                "vlan-match": {
+                    "vlan-id": {
+                        "vlan-id": "3174",
+                        "vlan-id-present": "true"
+                    }
+                }
+            },
+            "table_id": "0"
+        }
+    ]
+}
