@@ -14,8 +14,12 @@
     "license": "Apache-2.0",
     "name": "fkooman/odl-api",
     "require": {
+        "fkooman/http": "^1.1.0",
         "fkooman/ini": "^1.0.0",
+        "fkooman/io": "^1.0.0",
         "fkooman/json": "^1.0.0",
-        "guzzlehttp/guzzle": "~5.3"
+        "fkooman/rest": "^1.0.0",
+        "guzzlehttp/guzzle": "~5.3",
+	"fkooman/tpl-twig": "^1.0.0"
     }
 }

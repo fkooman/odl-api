@@ -11,20 +11,30 @@ class ApiCall
     private $client;
 
     /** @var string */
+    private $dataDir;
+
+    /** @var string */
     private $authUser;
 
     /** @var string */
     private $authPass;
 
-    public function __construct(Client $client, $authUser = 'admin', $authPass = 'admin')
+    public function __construct(Client $client, $dataDir, $authUser = 'admin', $authPass = 'admin')
     {
         $this->client = $client;
+        $this->dataDir = $dataDir;
         $this->authUser = $authUser;
         $this->authPass = $authPass;
     }
 
-    public function send($apiUrl, $apiData)
+    public function send($baseUrl, $apiData)
     {
+        // add the flowId to the baseUrl
+        $decodedApiData = Json::decode($apiData);
+
+        $flowId = $decodedApiData['flow'][0]['id'];
+        $apiUrl = $baseUrl.$flowId;
+
         return $this->client->put(
             $apiUrl,
             array(
@@ -33,6 +43,7 @@ class ApiCall
                     $this->authUser,
                     $this->authPass,
                 ),
+                'verify' => false,
                 'headers' => array(
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
@@ -41,13 +52,18 @@ class ApiCall
         );
     }
 
-#    public function setEther($macAddress)
-#    {
-#        $this->apiTemplate['flow'][0]['match']['ethernet-match']['ethernet-source']['address'] = $macAddress;
-#    }
+    public function activate($flowName)
+    {
+        $output = '';
+        foreach (glob($this->dataDir.sprintf('/%s/*.json', $flowName)) as $apiFile) {
+            $output .= $apiFile.'<br>';
+#            $apiData = $io->readFile($apiFile);
+#            $response = $apiCall->send($baseUrl, $apiData);
+#            echo $response;
+        }
 
-#    public function getJson()
-#    {
-#        return Json::encode($this->apiTemplate);
-#    }
+        // get all JSON files from data/$flowName and send them one by one
+
+        return $output;
+    }
 }

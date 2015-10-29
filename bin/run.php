@@ -11,25 +11,26 @@ $iniReader = IniReader::fromFile(
     dirname(__DIR__).'/config/config.ini'
 );
 
-$apiFile = dirname(__DIR__).'/data/01-arp-sender-to-loop.json';
-
-$apiData = IO::readFile($apiFile);
-
 #$apiFile = dirname(__DIR__).'/data/f1.json';
 #$targetEther = 'ff:ff:42:ff:ff:00';
 
 $baseUrl = $iniReader->v('Api', 'baseUrl');
-$apiUrl = $baseUrl; //$baseUrl.'/foo/bar';
+#$apiUrl = $baseUrl; //$baseUrl.'/foo/bar';
 
 try {
     $client = new Client();
+    $io = new IO();
     $apiCall = new ApiCall(
         $client,
         $iniReader->v('Api', 'authUser'),
         $iniReader->v('Api', 'authPass')
     );
-    $response = $apiCall->send($apiUrl, $apiData);
-    echo $response;
+    foreach (glob(dirname(__DIR__).'/data/*.json') as $apiFile) {
+        $apiData = $io->readFile($apiFile);
+#        echo $apiData;
+        $response = $apiCall->send($baseUrl, $apiData);
+        echo $response;
+    }
 } catch (Exception $e) {
     echo $e->getMessage().PHP_EOL;
     exit(1);

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="en">
+{% include 'head.twig' %}
+<body>
+    <div id="container">
+        {% include 'header.twig' %}
+        <p>Here you can select the flow you want to activate.</p>
+
+        <form method="post">
+            {% for flow in supportedFlows %}
+                {% if flow.id == active %}
+                    <button name="flow" type="submit" value="{{ flow.id|e }}" disabled="disabled">{{ flow.name|e }}</button>
+                {% else %}
+                    <button class="info" name="flow" type="submit" value="{{ flow.id|e }}">{{ flow.name|e }}</button>
+                {% endif %}
+            {% endfor %}
+        </form>
+    </div> <!-- /container -->
+</body>
+</html>

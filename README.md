@@ -12,6 +12,9 @@ Install Composer:
 
 # Installation
 
+    $ cd /var/www
+    $ sudo mkdir odl-api
+    $ sudo chown fkooman.fkooman odl-api
 	$ git clone https://github.com/fkooman/odl-api.git
 	$ cd odl-api
 	$ composer install
@@ -22,7 +25,21 @@ Install Composer:
 
 Now modify the `config.ini` file.
 
-# Running
-	
-	$ php bin/f1.php
+# Apache
+
+    Alias /odl-api /var/www/odl-api/web
+
+    <Directory /var/www/odl-api/web>
+        AllowOverride None
+
+        Require local
+        #Require all granted
+
+        RewriteEngine On
+        RewriteBase /odl-api
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^(.*)$ index.php/$1 [QSA,L]
+
+        SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
+    </Directory>
 
