@@ -6,9 +6,9 @@ This is software for using the ODL API.
 Install [Composer](https://getcomposer.org).
 
 ### Fedora
-Install Composer:
+Install Composer and some other dependencies:
 
-    $ sudo dnf -y install composer
+    $ sudo dnf -y install composer git php httpd mod_ssl
 
 # Installation
 
@@ -19,13 +19,8 @@ Install Composer:
 	$ cd odl-api
 	$ composer install
 
-# Configuration
-
-    $ cp config/config.ini.example config/config.ini
-
-Now modify the `config.ini` file.
-
-# Apache
+Also configure Apache, put this in `/etc/httpd/conf.d/odl-api.conf`. Do not 
+forget to allow access from a location of your choice.
 
     Alias /odl-api /var/www/odl-api/web
 
@@ -35,6 +30,10 @@ Now modify the `config.ini` file.
         Require local
         #Require all granted
 
+        # eduVPN
+        #Require ip 195.169.120.0/23
+        #Require ip 2001:0610:0450:4242::/64
+
         RewriteEngine On
         RewriteBase /odl-api
         RewriteCond %{REQUEST_FILENAME} !-f
@@ -43,3 +42,20 @@ Now modify the `config.ini` file.
         SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
     </Directory>
 
+# Configuration
+
+    $ cp config/config.ini.example config/config.ini
+
+Now modify the `config.ini` file.
+
+# Flows
+Create a `data` directory in `/var/www/odl-api` and put there the flow 
+directories. For example:
+
+    /var/www/odl-api/data/loop/01.json
+    /var/www/odl-api/data/loop/02.json
+    /var/www/odl-api/data/loop/03.json
+
+The UI will show a 'Loop' button and execute the API calls with data from 
+`01.json`, `02.json` and `03.json`, sorted by name. Adding more directories
+will show more buttons.
