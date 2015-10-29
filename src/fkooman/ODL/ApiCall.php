@@ -4,6 +4,7 @@ namespace fkooman\ODL;
 
 use fkooman\Json\Json;
 use GuzzleHttp\Client;
+use fkooman\IO\IO;
 
 class ApiCall
 {
@@ -19,12 +20,16 @@ class ApiCall
     /** @var string */
     private $authPass;
 
+    /** @var \fkooman\IO\IO */
+    private $io;
+
     public function __construct(Client $client, $dataDir, $authUser = 'admin', $authPass = 'admin')
     {
         $this->client = $client;
         $this->dataDir = $dataDir;
         $this->authUser = $authUser;
         $this->authPass = $authPass;
+        $this->io = new IO();
     }
 
     public function send($baseUrl, $apiData)
