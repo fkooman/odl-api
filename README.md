@@ -60,4 +60,8 @@ The UI will show a 'Loop' button and execute the API calls with data from
 `01.json`, `02.json` and `03.json`, sorted by name. Adding more directories
 will show more buttons.
 
-That should be all!
+# SELinux
+You may need to allow `httpd` to connect to the network to connect to the 
+API:
+
+    $ sudo setsebool -P httpd_can_network_connect=on

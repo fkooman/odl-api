@@ -48,7 +48,6 @@ class ApiCall
                     $this->authUser,
                     $this->authPass,
                 ),
-                //'verify' => false,
                 'headers' => array(
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
@@ -64,7 +63,7 @@ class ApiCall
             $output .= $apiFile.'<br>';
             $apiData = $this->io->readFile($apiFile);
             $response = $this->send($baseUrl, $apiData);
-            $output .= $response;
+            $output .= $response . '<br>';
         }
 
         return $output;
