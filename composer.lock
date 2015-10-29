@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "02c85601286ba1f292ce583fb9a592b9",
+    "content-hash": "792c66df4be7928a25185a2806938b60",
     "packages": [
         {
             "name": "fkooman/ini",

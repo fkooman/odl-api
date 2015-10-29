@@ -3,24 +3,51 @@
 namespace fkooman\ODL;
 
 use fkooman\Json\Json;
+use GuzzleHttp\Client;
 
 class ApiCall
 {
-    /** @var array */
-    private $apiTemplate;
+    /** @var \GuzzleHttp\Client */
+    private $client;
 
-    public function __construct($apiTemplateFile)
+    /** @var string */
+    private $authUser;
+
+    /** @var string */
+    private $authPass;
+
+    public function __construct(Client $client, $authUser = 'admin', $authPass = 'admin')
     {
-        $this->apiTemplate = Json::decodeFile($apiTemplateFile);
+        $this->client = $client;
+        $this->authUser = $authUser;
+        $this->authPass = $authPass;
     }
 
-    public function setEther($macAddress)
+    public function send($apiUrl, $apiData)
     {
-        $this->apiTemplate['flow'][0]['match']['ethernet-match']['ethernet-source']['address'] = $macAddress;
+        return $this->client->put(
+            $apiUrl,
+            array(
+                'body' => $apiData,
+                'auth' => array(
+                    $this->authUser,
+                    $this->authPass,
+                ),
+                'headers' => array(
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ),
+            )
+        );
     }
 
-    public function getJson()
-    {
-        return Json::encode($this->apiTemplate);
-    }
+#    public function setEther($macAddress)
+#    {
+#        $this->apiTemplate['flow'][0]['match']['ethernet-match']['ethernet-source']['address'] = $macAddress;
+#    }
+
+#    public function getJson()
+#    {
+#        return Json::encode($this->apiTemplate);
+#    }
 }
