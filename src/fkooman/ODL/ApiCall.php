@@ -5,6 +5,7 @@ namespace fkooman\ODL;
 use fkooman\Json\Json;
 use GuzzleHttp\Client;
 use fkooman\IO\IO;
+use Exception;
 
 class ApiCall
 {
@@ -37,7 +38,14 @@ class ApiCall
         // add the flowId to the baseUrl
         $decodedApiData = Json::decode($apiData);
 
-        $flowId = $decodedApiData['flow'][0]['id'];
+        if (array_key_exists('flow', $decodedApiData)) {
+            $flowId = $decodedApiData['flow'][0]['id'];
+        } elseif (array_key_exists('flow-node-inventory:table', $decodedApiData)) {
+            $flowId = $decodedApiData['flow-node-inventory:table'][0]['id'];
+        } else {
+            throw new Exception('unable to determine flow ID');
+        }
+
         $apiUrl = $baseUrl.$flowId;
 
         return $this->client->put(
@@ -63,7 +71,7 @@ class ApiCall
             $output .= $apiFile.'<br>';
             $apiData = $this->io->readFile($apiFile);
             $response = $this->send($baseUrl, $apiData);
-            $output .= $response . '<br>';
+            $output .= $response.'<br>';
         }
 
         return $output;
