@@ -48,7 +48,7 @@ forget to allow access from a location of your choice.
 
 Now modify the `config.ini` file.
 
-# Flows
+## Flows
 Create a `data` directory in `/var/www/odl-api` and put there the flow 
 directories. For example:
 
@@ -59,3 +59,5 @@ directories. For example:
 The UI will show a 'Loop' button and execute the API calls with data from 
 `01.json`, `02.json` and `03.json`, sorted by name. Adding more directories
 will show more buttons.
+
+That should be all!
