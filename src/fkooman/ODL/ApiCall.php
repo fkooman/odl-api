@@ -43,7 +43,7 @@ class ApiCall
                     $this->authUser,
                     $this->authPass,
                 ),
-                'verify' => false,
+                //'verify' => false,
                 'headers' => array(
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
@@ -52,17 +52,15 @@ class ApiCall
         );
     }
 
-    public function activate($flowName)
+    public function activate($baseUrl, $flowName)
     {
         $output = '';
         foreach (glob($this->dataDir.sprintf('/%s/*.json', $flowName)) as $apiFile) {
             $output .= $apiFile.'<br>';
-#            $apiData = $io->readFile($apiFile);
-#            $response = $apiCall->send($baseUrl, $apiData);
-#            echo $response;
+            $apiData = $io->readFile($apiFile);
+            $response = $apiCall->send($baseUrl, $apiData);
+            $output .= $response;
         }
-
-        // get all JSON files from data/$flowName and send them one by one
 
         return $output;
     }

@@ -17,6 +17,8 @@ $iniReader = IniReader::fromFile(
     dirname(__DIR__).'/config/config.ini'
 );
 
+$baseUrl = $iniReader->v('Api', 'baseUrl');
+
 // templates
 $templateManager = new TwigTemplateManager(
     array(
@@ -69,11 +71,11 @@ $service->get(
 // POST
 $service->post(
     '/',
-    function (Request $request) use ($templateManager, $apiCall) {
+    function (Request $request) use ($templateManager, $apiCall, $baseUrl) {
         // determine the flow to activate
         $flowName = $request->getPostParameter('flow');
 
-        $output = $apiCall->activate($flowName);
+        $output = $apiCall->activate($baseUrl, $flowName);
 
         return $output;
 #        return new RedirectResponse(
