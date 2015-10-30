@@ -54,7 +54,10 @@ button.error {
     color: #fff;
 }
 
-textarea {
+div.output {
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    background: #eee;
     margin: 1em 0;
     width: 100%;
     height: 20em;

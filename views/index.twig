@@ -18,7 +18,7 @@
         </form>
     
         {% if output %}
-        <textarea disabled="disabled">{{ output|e }}</textarea>
+        <div class="output">{{ output|e|nl2br }}</div>
         {% endif %}
     </div> <!-- /container -->
 </body>
