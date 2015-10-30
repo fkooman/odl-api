@@ -1,4 +1,4 @@
 [Api]
-baseUrl = 'http://localhost/api'
+baseUrl  = 'http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:64/flow-node-inventory:table/0'
 authUser = 'admin'
 authPass = 'admin'
