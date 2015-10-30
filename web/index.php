@@ -64,6 +64,7 @@ try {
                 array(
                     'supportedFlows' => $supportedFlows,
                     'active' => $request->getUrl()->getQueryParameter('active'),
+                    'output' => base64_decode($request->getUrl()->getQueryParameter('output')),
                 )
             );
         }
@@ -78,11 +79,10 @@ try {
 
             $output = $apiCall->activate($baseUrl, $flowName);
 
-            return $output;
-    #        return new RedirectResponse(
-    #            $request->getUrl()->getRoot().sprintf('?active=%s', $flowName), 
-    #            302
-    #        );
+            return new RedirectResponse(
+                $request->getUrl()->getRoot().sprintf('?active=%s&output=%s', $flowName, base64_encode($output)),
+                302
+            );
         }
     );
 

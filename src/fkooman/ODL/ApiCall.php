@@ -72,10 +72,9 @@ class ApiCall
     {
         $output = '';
         foreach (glob($this->dataDir.sprintf('/%s/*.json', $flowName)) as $apiFile) {
-            $output .= $apiFile.'<br>';
             $apiData = $this->io->readFile($apiFile);
             $response = $this->send($baseUrl, $apiData, 'reset' === $flowName);
-            $output .= $response.'<br>';
+            $output .= sprintf("%s: %s\n", $apiFile, $response->getStatusCode());
         }
 
         return $output;

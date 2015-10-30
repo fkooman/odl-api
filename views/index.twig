@@ -16,6 +16,10 @@
                 {% endif %}
             {% endfor %}
         </form>
+    
+        {% if output %}
+        <textarea disabled="disabled">{{ output|e }}</textarea>
+        {% endif %}
     </div> <!-- /container -->
 </body>
 </html>
