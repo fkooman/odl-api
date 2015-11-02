@@ -2,13 +2,14 @@
 
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
-use fkooman\Rest\Service;
-use fkooman\Http\Request;
-use fkooman\Tpl\Twig\TwigTemplateManager;
-use fkooman\Ini\IniReader;
-use GuzzleHttp\Client;
-use fkooman\ODL\ApiCall;
 use fkooman\Http\RedirectResponse;
+use fkooman\Http\Request;
+use fkooman\Ini\IniReader;
+use fkooman\IO\IO;
+use fkooman\ODL\ApiCall;
+use fkooman\Rest\Service;
+use fkooman\Tpl\Twig\TwigTemplateManager;
+use GuzzleHttp\Client;
 
 try {
     $request = new Request($_SERVER);
@@ -18,7 +19,7 @@ try {
         dirname(__DIR__).'/config/config.ini'
     );
 
-    $baseUrl = $iniReader->v('Api', 'baseUrl');
+    $apiUrl = $iniReader->v('Api', 'apiUrl');
 
     // templates
     $templateManager = new TwigTemplateManager(
@@ -34,21 +35,23 @@ try {
         )
     );
 
+    $io = new IO();
+
     $dataDir = dirname(__DIR__).'/data';
 
     // API call
     $client = new Client();
     $authUser = $iniReader->v('Api', 'authUser');
     $authPass = $iniReader->v('Api', 'authPass');
-    $apiCall = new ApiCall($client, $dataDir, $authUser, $authPass);
+    $apiCall = new ApiCall($client, $authUser, $authPass);
 
     // supported flow names
     $supportedFlows = array();
-    foreach (glob($dataDir.'/*', GLOB_ONLYDIR) as $dirName) {
-        $flowName = basename($dirName);
+    foreach (glob($dataDir.'/*.json') as $fileName) {
+        $flowName = basename($fileName, '.json');
         $supportedFlows[] = array(
             'id' => $flowName,
-            'name' => ucfirst($flowName),
+            'name' => $flowName,
         );
     }
 
@@ -73,11 +76,12 @@ try {
     // POST
     $service->post(
         '/',
-        function (Request $request) use ($templateManager, $apiCall, $baseUrl) {
+        function (Request $request) use ($io, $dataDir, $apiCall, $apiUrl) {
             // determine the flow to activate
             $flowName = $request->getPostParameter('flow');
 
-            $output = $apiCall->activate($baseUrl, $flowName);
+            $apiData = $io->readFile($dataDir.'/'.$flowName.'.json');
+            $output = $apiCall->send($apiUrl, $apiData);
 
             return new RedirectResponse(
                 $request->getUrl()->getRoot().sprintf('?active=%s&output=%s', $flowName, base64_encode($output)),

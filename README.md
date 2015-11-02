@@ -50,15 +50,13 @@ Now modify the `config.ini` file.
 
 ## Flows
 Create a `data` directory in `/var/www/odl-api` and put there the flow 
-directories. For example:
+files. For example:
 
-    /var/www/odl-api/data/loop/01.json
-    /var/www/odl-api/data/loop/02.json
-    /var/www/odl-api/data/loop/03.json
+    /var/www/odl-api/data/loop.json
+    /var/www/odl-api/data/reset.json
 
-The UI will show a 'Loop' button and execute the API calls with data from 
-`01.json`, `02.json` and `03.json`, sorted by name. Adding more directories
-will show more buttons.
+The UI will show a 'loop' button and a 'reset' button and execute the API 
+calls with data from the JSON files. Adding more files will show more buttons.
 
 # SELinux
 You may need to allow `httpd` to connect to the network to connect to the 
