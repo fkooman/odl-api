@@ -22,7 +22,7 @@ class ApiCall
         $this->authPass = $authPass;
     }
 
-    public function send($apiUrl, $apiData) //, $isReset = false)
+    public function send($apiUrl, $apiData)
     {
         return $this->client->put(
             $apiUrl,
@@ -37,6 +37,6 @@ class ApiCall
                     'Content-Type' => 'application/json',
                 ),
             )
-        );
+        )->getStatusCode();
     }
 }
