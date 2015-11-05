@@ -10,7 +10,6 @@ use fkooman\ODL\ApiCall;
 use fkooman\Rest\Service;
 use fkooman\Tpl\Twig\TwigTemplateManager;
 use GuzzleHttp\Client;
-use fkooman\Http\Exception\BadRequestException;
 
 try {
     $request = new Request($_SERVER);
@@ -50,10 +49,22 @@ try {
     $supportedFlows = array();
     foreach (glob($dataDir.'/*.json') as $fileName) {
         $flowName = basename($fileName, '.json');
-        $supportedFlows[] = array(
-            'id' => $flowName,
-            'name' => $flowName,
-        );
+        // remove the table from it
+        $flowName = substr($flowName, 0, strrpos($flowName, '-'));
+
+        $found = false;
+        foreach ($supportedFlows as $sf) {
+            if ($flowName === $sf['id']) {
+                $found = true;
+            }
+        }
+
+        if (!$found) {
+            $supportedFlows[] = array(
+                'id' => $flowName,
+                'name' => $flowName,
+            );
+        }
     }
 
     // REST service
@@ -80,18 +91,17 @@ try {
         function (Request $request) use ($io, $dataDir, $apiCall, $apiUrl) {
             // determine the flow to activate on the table
             $btn = $request->getPostParameter('flow');
-            $flowName = substr($btn, 0, strrpos($btn, '-'));
-            $flowTable = substr($btn, strrpos($btn, '-') + 1);
+            $output = '';
 
-            if (!is_numeric($flowTable)) {
-                throw new BadRequestException('table must be numeric');
+            $tables = array('0', '2', '3', '10');
+            foreach ($tables as $t) {
+                $file = $dataDir.'/'.$btn.'-'.$t.'.json';
+                $apiData = $io->readFile($file);
+                $output .= $apiCall->send($apiUrl.$t, $apiData).PHP_EOL;
             }
 
-            $apiData = $io->readFile($dataDir.'/'.$btn.'.json');
-            $output = $apiCall->send($apiUrl.$flowTable, $apiData);
-
             return new RedirectResponse(
-                $request->getUrl()->getRoot().sprintf('?active=%s&output=%s', $flowName, base64_encode($output)),
+                $request->getUrl()->getRoot().sprintf('?active=%s&output=%s', $btn, base64_encode($output)),
                 302
             );
         }
