@@ -10,6 +10,7 @@ use fkooman\ODL\ApiCall;
 use fkooman\Rest\Service;
 use fkooman\Tpl\Twig\TwigTemplateManager;
 use GuzzleHttp\Client;
+use fkooman\Http\Exception\BadRequestException;
 
 try {
     $request = new Request($_SERVER);
@@ -77,11 +78,17 @@ try {
     $service->post(
         '/',
         function (Request $request) use ($io, $dataDir, $apiCall, $apiUrl) {
-            // determine the flow to activate
-            $flowName = $request->getPostParameter('flow');
+            // determine the flow to activate on the table
+            $btn = $request->getPostParameter('flow');
+            $flowName = substr($btn, 0, strrpos($btn, '-'));
+            $flowTable = substr($btn, strrpos($btn, '-') + 1);
 
-            $apiData = $io->readFile($dataDir.'/'.$flowName.'.json');
-            $output = $apiCall->send($apiUrl, $apiData);
+            if (!is_numeric($flowTable)) {
+                throw new BadRequestException('table must be numeric');
+            }
+
+            $apiData = $io->readFile($dataDir.'/'.$btn.'.json');
+            $output = $apiCall->send($apiUrl.$flowTable, $apiData);
 
             return new RedirectResponse(
                 $request->getUrl()->getRoot().sprintf('?active=%s&output=%s', $flowName, base64_encode($output)),

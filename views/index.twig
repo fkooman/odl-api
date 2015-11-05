@@ -5,6 +5,11 @@
 <body>
     <div id="container">
         {% include 'header.twig' %}
+
+        {% if output %}
+        <div class="output">{{ output|e|nl2br }}</div>
+        {% endif %}
+
         <p>Here you can select the flow you want to activate.</p>
 
         <form method="post">
@@ -16,10 +21,7 @@
                 {% endif %}
             {% endfor %}
         </form>
-    
-        {% if output %}
-        <div class="output">{{ output|e|nl2br }}</div>
-        {% endif %}
-    </div> <!-- /container -->
+
+        </div> <!-- /container -->
 </body>
 </html>

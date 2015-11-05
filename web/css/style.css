@@ -34,6 +34,7 @@ button {
     color: #000;
     height: 2em;
     line-height: 2em;
+    margin: 0.2em;
 }
 
 button.info {
