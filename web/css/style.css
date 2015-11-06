@@ -1,64 +1,101 @@
-body {
-    max-width: 650px;
-    margin: 1em auto;
-    line-height: 1.4em;
-    padding: 0.3em;
-    color: #444;
+body
+{
+	font-family: Verdana;
+	font-size: 125%;
 }
-
-p {
-    text-align: justify;
+h2
+{
+	background: #0080B3;
+	color: #fff;
+	margin: 0px;
+	padding: 5px;
 }
-
-p.warning {
-    background-color: #fc0;
-    border: 1px solid #da0;
-    color: #000;
-    padding: 1em;
+ul,li
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
-
-label {
-    display: block;
-    margin: 1em;
+.mn-items,.header-favorites
+{
+	clear: both;
+	display: block;
+	width: 300px;
 }
-
-input {
-    width: 2em;
-    margin: 0.5em;
+.mn-items li
+{
+	background: #C8DDF7;
+	cursor: pointer;
+	margin-bottom: 5px;
+	padding: 5px;
+	position: relative;
 }
-
-p.plain {
-    background-color: #eee; 
-    border: 1px solid #ccc;
-    color: #000;
-    padding: 1em;
+.header-favorites
+{
+	margin-top: 20px;
 }
-
-a {
-    color: #000;
+.header-favorites ul
+{
+	background: #E1FFDF;
+	clear: both;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
 }
-
-button {
-    background-color: #ddd;
-    border: 1px solid #bbb;
-    color: #000;
-    height: 2em;
-    line-height: 2em;
-    margin: 0.2em;
+.header-favorites ul li
+{
+	border-left: 2px solid #000;
+	border-top: 2px solid #fff;
+	cursor: pointer;
+	padding: 10px;
+	position: relative;
 }
-
-button.info {
-    background-color: #063;
-    border: 1px solid #041;
-    color: #fff; 
+.header-favorites ul li:first-child
+{
+	border-top: none;
 }
-
-div.output {
+.mn-items li i,.header-favorites ul li i
+{
+	display: block;
+	font-size: 30px;
+	font-style: normal;
+	font-weight: bold;
+	opacity: 0.5;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+.placeholder
+{
+	background: none;
+	border: 1px solid #ccc !important;
+	color: #888;
+	cursor: default;
+	margin-bottom: 0 !important;
+	text-align: center;
+}
+.ui-sortable-helper
+{
+	background: #fff;
+}
+.addedToFav
+{
+	background: #B8FFB3 !important;
+}
+.addedToFav i:before
+{
+	content: "\f005";
+}
+.header-favorites i:before
+{
+	content: "\f00d";
+}
+div#output {
     border: 1px solid #ccc;
     padding: 0.5em;
     background: #eee;
     margin: 1em 0;
-    width: 100%;
+    max-width: 300px;
     height: 10em;
     overflow: scroll;
 }

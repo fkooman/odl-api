@@ -10,16 +10,30 @@
         <div class="output">{{ output|e|nl2br }}</div>
         {% endif %}
 
-        <p>Prioritize the functions between sender and receiver.</p>
-        <p>Functions are ordered from low to high number. Disable a function with <code>0</code>.</p>
+        <div class="mn-items">
+            <h2>Drag</h2>
+            <div id="catalog">
+                <ul class="rp-draggable">
+                    {% for location in supportedLocations %}
+                    <li uuid="{{ location.id|e }}" id="{{ location.id|e }}"><img alt="{{ location.id|e }}" title="{{ location.id|e }}" width="150" src="img/{{ location.id|e }}.png"/> <i class="fa fa-star-o"></i></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
-        <form method="post">
-            {% for location in supportedLocations %}
-                <label><input type="text" name="{{ location.id|e }}" value="0">{{ location.name|e }}</label>
-            {% endfor %}
-            <button class="info" type="submit">Configure</button>
-        </form>
+        <div class="header-favorites">
+            <h2>Drop Here...</h2>
+            <ul class="h-droped-list" id="sortable2">
+                <li class="placeholder">Create Network Function Virtualization path</li>
+            </ul>
+        </div>
 
-        </div> <!-- /container -->
+        <br/>
+
+        <button id="createPath">Create Path</button>
+
+        <div id="output"></div>
+
+    </div> <!-- /container -->
 </body>
 </html>

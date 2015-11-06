@@ -2,7 +2,6 @@
 
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
-use fkooman\Http\RedirectResponse;
 use fkooman\Http\Request;
 use fkooman\Ini\IniReader;
 use fkooman\IO\IO;
@@ -69,9 +68,9 @@ try {
         '/',
         function (Request $request) use ($io, $dataDir, $apiCall, $apiUrl) {
             // determine the flow to activate on the table
-            $flowName = Utils::determineFlow($request->getPostParameters());
-            if (false === $flowName) {
-                $output = 'Please enable at least one function!';
+            $flowName = $request->getPostParameter('flow');
+            if (null === $flowName || empty($flowName)) {
+                $output = 'No flow specified!';
             } else {
                 $output = '';
                 $tables = array('0', '2', '3', '10');
@@ -82,10 +81,7 @@ try {
                 }
             }
 
-            return new RedirectResponse(
-                $request->getUrl()->getRoot().sprintf('?output=%s', base64_encode($output)),
-                302
-            );
+            return $output;
         }
     );
 

@@ -25,26 +25,4 @@ class Utils
 
         return $supportedLocations;
     }
-
-    /**
-     * Determine the flow by removing the locations with priority 0 and
-     * sorting the non-zero locations by number. Lowest is highest priority.
-     */
-    public static function determineFlow(array $locationData)
-    {
-        $flow = array();
-        foreach ($locationData as $key => $value) {
-            if (0 >= (int) $value) {
-                continue;
-            }
-            $flow[$value] = $key;
-        }
-
-        ksort($flow);
-        if (0 === count($flow)) {
-            return false;
-        }
-
-        return implode('_', $flow);
-    }
 }
