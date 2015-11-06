@@ -1,0 +1,131 @@
+body
+{
+	background-color: #ddd;
+	margin: 0;
+	padding: 0;
+}
+.page-lock
+{
+	left: 50%;
+	margin-left: -360px;
+	margin-top: -340px;
+	position: absolute;
+	top: 50%;
+}
+.page-lock .page-logo
+{
+	margin-bottom: 15px;
+}
+.page-lock .page-body
+{
+	background: url(../index_files/bg-white-lock.png);
+	border-radius: 7px;
+	moz-border-radius: 7px;
+	ms-border-radius: 7px;
+	o-border-radius: 7px;
+	padding: 15px;
+	webkit-border-radius: 7px;
+	width: 680px;
+}
+.page-lock .page-body:after,.page-lock .page-body:before
+{
+	content: "";
+	display: table;
+	line-height: 0;
+}
+.page-lock .page-body:after
+{
+	clear: both;
+}
+.page-lock .page-footer-custom
+{
+	color: #eaeaea;
+	font-size: 12px;
+	margin-top: 10px;
+	text-align: left!important;
+}
+.page-lock img.page-lock-img
+{
+	float: left;
+	height: auto;
+	width: 200px;
+}
+.page-lock .page-lock-info
+{
+	float: right;
+	padding-left: 10px;
+	width: 280px;
+}
+.page-lock .page-lock-info h1
+{
+	color: #fff;
+	font-size: 28px;
+	font-weight: 300;
+	line-height: 32px;
+	margin-bottom: 5px;
+	margin-top: -5px;
+}
+.page-lock .page-lock-info .email
+{
+	color: #eee;
+	display: block;
+	font-size: 14px;
+	line-height: 14px;
+	margin-bottom: 10px;
+}
+.page-lock .page-lock-info .locked
+{
+	color: #333;
+	font-size: 14px;
+	font-style: normal;
+	line-height: 14px;
+}
+.page-lock .page-lock-info form
+{
+	margin: 28px 0;
+}
+.page-lock .page-lock-info input
+{
+	background: #fff;
+}
+.page-lock .relogin
+{
+	margin-top: 10px;
+}
+.page-lock .relogin a
+{
+	color: #e1e1e1;
+}
+@media (max-width:768px)
+{
+	.page-lock
+	{
+		margin-left: -140px;
+		margin-top: 20px;
+		top: 0;
+		width: 280px;
+	}
+	.page-lock .page-body
+	{
+		padding: 20px 10px;
+		text-align: center;
+		width: 280px;
+	}
+	.page-lock img.page-lock-img
+	{
+		display: block;
+		float: none!important;
+		margin: 0 auto 15px;
+		text-align: center;
+	}
+	.page-lock .page-lock-info
+	{
+		float: none!important;
+		margin: 0 auto;
+		width: 260px;
+	}
+	.page-lock .page-lock-info input
+	{
+		width: 200px!important;
+	}
+}

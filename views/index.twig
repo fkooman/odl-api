@@ -1,14 +1,188 @@
 <!DOCTYPE html>
 
-<html lang="en">
-{% include 'head.twig' %}
-<body>
-    <div id="container">
-        {% include 'header.twig' %}
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Je Weet Zelluf</title>
 
-        {% if output %}
-        <div class="output">{{ output|e|nl2br }}</div>
-        {% endif %}
+
+						<link href="./index_files/css.css" rel="stylesheet" type="text/css">
+									
+									<link href="./index_files/simple-line-icons.min.css" rel="stylesheet" type="text/css">
+										<link href="./index_files/bootstrap.min.css" rel="stylesheet" type="text/css">
+													<link href="./index_files/uniform.default.css" rel="stylesheet" type="text/css">
+									<link href="./index_files/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+
+		<link href="./index_files/components-rounded.min.css" rel="stylesheet" id="style_components" type="text/css">
+		<link href="./index_files/plugins.min.css" rel="stylesheet" type="text/css">
+
+			<link href="./index_files/lock-2.min.css" rel="stylesheet" type="text/css">
+
+
+<link rel="shortcut icon" href="http://www.wladimir.nl/favicon.ico">
+
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+
+
+<style>
+
+h2 {padding:5px;background:#0080B3;margin:0px;color:#fff;}
+ul,li{list-style:none;margin:0;padding:0;}
+
+.mn-items{float:left;width:300px;}
+.header-favorites{float:left;width:300px;}
+
+
+#status_path{display:block;clear:both;width:600px;font-size:30px;font-weight:bold;}
+.mn-items li{background:#C8DDF7;padding:5px;cursor:pointer;margin-bottom:5px;position:relative;}
+
+.header-favorites {margin-top:0px; margin-left:30px;}
+.header-favorites ul {margin:0;padding:0;background:#E1FFDF;clear:both;overflow:hidden;}
+.header-favorites ul li{position:relative;padding:10px;border-top:2px solid #fff;border-left:2px solid #000;cursor:pointer;}
+.header-favorites ul li:first-child{border-top:none;}
+
+.mn-items li i,.header-favorites ul li i{display:block;position:absolute;right:5px;top:15px;opacity:0.5;font-size:30px;font-weight:bold;font-style:normal;}
+
+.placeholder{background:none;color:#888;cursor:default;margin-bottom:0 !important;text-align:center;border:1px solid #ccc !important;}
+.ui-sortable-helper{background:#fff;}
+
+.addedToFav{background:#B8FFB3 !important;}
+.addedToFav i:before{content:"\f005";}
+.header-favorites i:before{content:"\f00d";}
+
+
+</style>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    
+    /* jQuery Droppable */
+    $(function() {
+        $( ".mn-items .rp-draggable li" ).draggable({
+            appendTo: "body",
+            helper: "clone"
+        });
+        $( ".header-favorites ul" ).droppable({
+            activeClass: "ui-state-default",
+            hoverClass: "ui-state-hover",
+            accept: ":not(.ui-sortable-helper)",
+            drop: function( event, ui ) {
+                $( this ).find( ".placeholder" ).hide();
+                $(ui.draggable)
+                  .addClass("addedToFav")
+                  .clone()
+                  .appendTo(this);
+            }
+        }).sortable({
+            items: "li:not(.placeholder)",
+            sort: function() {
+                $( this ).removeClass( "ui-state-default" );
+            }
+        });
+    });
+    
+    
+    /* Click Star Icon to Add to Drop Here Container */
+    $('ul.rp-draggable li .fa-star-o').click(function(){
+        var $target = $(this).closest("li"),
+            $dropedList = $(".h-droped-list"),
+            id = $target.attr("uuid");
+        
+        if(!$target.hasClass("addedToFav")){
+            $target
+              .addClass("addedToFav")
+              .clone()
+              .appendTo($dropedList);
+            
+            $dropedList
+             .find(".placeholder")
+             .hide();
+        }else{
+           $dropedList
+             .find("li")
+             .each(function(index, item) {
+               var $elem = $(item);
+                 
+                 if($elem.attr("uuid") == id){
+                   $elem.remove();
+                   $target.removeClass("addedToFav"); 
+                 }
+                 
+                 if($dropedList.children().length == 1){
+                    var $lastItem = $($dropedList.children()[0]);
+                    $lastItem.hasClass("placeholder") && $lastItem.show();
+                 }
+             })
+        }
+       
+    });
+    
+    /* Click Close Icon to Remove from Drop Here Container */
+    $("ul.h-droped-list").on('click','li .fa-star-o',function(){
+        var $target = $(this).closest("li"),
+            $catalog = $("#catalog ul"),
+            id = $target.attr("uuid"),
+            $dropList = $target.parent("ul");
+        
+        $target.remove();
+        
+        $catalog
+          .find("li")
+        .each(function(index, item){
+          var $elem = $(item);
+            
+          if($elem.attr("uuid") == id)
+              $elem.removeClass("addedToFav");
+        })
+        
+        if($dropList.children().length == 1){
+            var $lastItem = $($dropList.children()[0]);
+            $lastItem.hasClass("placeholder") && $lastItem.show();
+        }
+       
+    });
+    
+    /* Hide Placeholder if it has Items or Show if it is empty */
+    if($(".header-favorites ul li:not(.placeholder)").length > 0) {
+        $(".header-favorites ul li.placeholder").hide();
+    }else{
+        $(".header-favorites ul li.placeholder").show();
+    }
+    
+
+
+    $("button#createPath").click(function() {
+        var idsInOrder = $("#sortable2").sortable("toArray");
+
+        var formData = new FormData();
+        formData.append("flow", idsInOrder.join('_'));
+        var request = new XMLHttpRequest();
+        request.addEventListener("load", function() {
+            $('div#output').html(this.responseText);
+        });
+        request.open("POST", "");
+        request.send(formData);
+    });
+    
+});
+
+</script>
+
+</head>
+<body class="">
+ 	
+
+	<div class="page-lock">
+	<div class="page-logo">
+		
+		<img src="https://www.surf.nl/binaries/werkmaatschappijlogo/content/gallery/surf/logos/surfnet.png" height="40" alt="logo">
+		
+	</div>
+	<div class="page-body">
+		
 
         <div class="mn-items">
             <h2>Drag</h2>
@@ -30,10 +204,51 @@
 
         <br/>
 
+
+ <br/>
+ 
+<div id="status_path">
+    <br/>
+	No path at the moment...
+	
+
+
+</div>
+	<hr/>
+
         <button id="createPath">Create Path</button>
 
+<hr />
         <div id="output"></div>
 
-    </div> <!-- /container -->
-</body>
-</html>
+
+	
+		
+	</div>
+	<div class="page-footer-custom">
+		 2018 © FrWlMiGe.
+	</div>
+</div>
+
+
+
+								
+									<script src="./index_files/bootstrap.min.js" type="text/javascript"></script>
+									<script src="./index_files/js.cookie.min.js" type="text/javascript"></script>
+									<script src="./index_files/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+									<script src="./index_files/jquery.slimscroll.min.js" type="text/javascript"></script>
+									<script src="./index_files/jquery.blockui.min.js" type="text/javascript"></script>
+									<script src="./index_files/jquery.uniform.min.js" type="text/javascript"></script>
+									<script src="./index_files/bootstrap-switch.min.js" type="text/javascript"></script>
+									<script src="./index_files/jquery.backstretch.min.js" type="text/javascript"></script>
+									<script src="./index_files/app.min.js" type="text/javascript"></script>
+									<script src="./index_files/lock-2.min.js" type="text/javascript"></script>
+
+	
+
+
+
+
+ <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 257px; width: 1903px; z-index: -999999; position: fixed;"><img src="./index_files/2.jpg" class="deleteable" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1903px; height: 1008.92px; max-height: none; max-width: none; z-index: -999999; left: 0px; top: -375.959px;"><img src="./index_files/3.jpg" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1903px; height: 1426.99px; max-height: none; max-width: none; z-index: -999999; opacity: 0.132306; left: 0px; top: -584.995px;"></div>
+
+ </body></html>
