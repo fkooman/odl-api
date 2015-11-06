@@ -10,8 +10,8 @@
         <div class="output">{{ output|e|nl2br }}</div>
         {% endif %}
 
-        <p>Here you can set the priority of the functions on the path between sender and receiver.</p>
-        <p>Lowest number is highest priority, use <code>0</code> to disable a particular function.</p>
+        <p>Prioritize the functions between sender and receiver.</p>
+        <p>Functions are ordered from low to high number. Disable a function with <code>0</code>.</p>
 
         <form method="post">
             {% for location in supportedLocations %}
