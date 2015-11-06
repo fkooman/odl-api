@@ -17,6 +17,16 @@ p.warning {
     padding: 1em;
 }
 
+label {
+    display: block;
+    margin: 1em;
+}
+
+input {
+    width: 2em;
+    margin: 0.5em;
+}
+
 p.plain {
     background-color: #eee; 
     border: 1px solid #ccc;
@@ -43,23 +53,12 @@ button.info {
     color: #fff; 
 }
 
-button.warning {
-    background-color: #fc0;
-    border: 1px solid #da0;
-    color: #000; 
-}
-
-button.error {
-    background-color: #c00;
-    border: 1px solid #a00;
-    color: #fff;
-}
-
 div.output {
     border: 1px solid #ccc;
     padding: 0.5em;
     background: #eee;
     margin: 1em 0;
     width: 100%;
-    height: 20em;
+    height: 10em;
+    overflow: scroll;
 }

@@ -7,6 +7,7 @@ use fkooman\Http\Request;
 use fkooman\Ini\IniReader;
 use fkooman\IO\IO;
 use fkooman\ODL\ApiCall;
+use fkooman\ODL\Utils;
 use fkooman\Rest\Service;
 use fkooman\Tpl\Twig\TwigTemplateManager;
 use GuzzleHttp\Client;
@@ -35,37 +36,16 @@ try {
         )
     );
 
-    $io = new IO();
-
-    $dataDir = dirname(__DIR__).'/data';
-
     // API call
     $client = new Client();
     $authUser = $iniReader->v('Api', 'authUser');
     $authPass = $iniReader->v('Api', 'authPass');
     $apiCall = new ApiCall($client, $authUser, $authPass);
 
-    // supported flow names
-    $supportedFlows = array();
-    foreach (glob($dataDir.'/*.json') as $fileName) {
-        $flowName = basename($fileName, '.json');
-        // remove the table from it
-        $flowName = substr($flowName, 0, strrpos($flowName, '-'));
-
-        $found = false;
-        foreach ($supportedFlows as $sf) {
-            if ($flowName === $sf['id']) {
-                $found = true;
-            }
-        }
-
-        if (!$found) {
-            $supportedFlows[] = array(
-                'id' => $flowName,
-                'name' => $flowName,
-            );
-        }
-    }
+    $io = new IO();
+    $dataDir = dirname(__DIR__).'/data';
+    $supportedLocations = Utils::extractLocations($dataDir);
+    $supportedTables = array('0', '2', '3', '10');
 
     // REST service
     $service = new Service();
@@ -73,12 +53,11 @@ try {
     // GET 
     $service->get(
         '/',
-        function (Request $request) use ($templateManager, $supportedFlows) {
+        function (Request $request) use ($templateManager, $supportedLocations) {
             return $templateManager->render(
                 'index',
                 array(
-                    'supportedFlows' => $supportedFlows,
-                    'active' => $request->getUrl()->getQueryParameter('active'),
+                    'supportedLocations' => $supportedLocations,
                     'output' => base64_decode($request->getUrl()->getQueryParameter('output')),
                 )
             );
@@ -90,18 +69,21 @@ try {
         '/',
         function (Request $request) use ($io, $dataDir, $apiCall, $apiUrl) {
             // determine the flow to activate on the table
-            $btn = $request->getPostParameter('flow');
-            $output = '';
-
-            $tables = array('0', '2', '3', '10');
-            foreach ($tables as $t) {
-                $file = $dataDir.'/'.$btn.'-'.$t.'.json';
-                $apiData = $io->readFile($file);
-                $output .= $apiCall->send($apiUrl.$t, $apiData).PHP_EOL;
+            $flowName = Utils::determineFlow($request->getPostParameters());
+            if (false === $flowName) {
+                $output = 'Please enable at least one function!';
+            } else {
+                $output = '';
+                $tables = array('0', '2', '3', '10');
+                foreach ($tables as $table) {
+                    $fileName = sprintf('%s/%s-%s.json', $dataDir, $flowName, $table);
+                    $apiData = $io->readFile($fileName);
+                    $output .= sprintf('%s: %s'.PHP_EOL, basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
+                }
             }
 
             return new RedirectResponse(
-                $request->getUrl()->getRoot().sprintf('?active=%s&output=%s', $btn, base64_encode($output)),
+                $request->getUrl()->getRoot().sprintf('?output=%s', base64_encode($output)),
                 302
             );
         }

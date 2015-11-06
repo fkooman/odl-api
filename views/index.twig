@@ -10,16 +10,14 @@
         <div class="output">{{ output|e|nl2br }}</div>
         {% endif %}
 
-        <p>Here you can select the flow you want to activate.</p>
+        <p>Here you can set the priority of the functions on the path between sender and receiver.</p>
+        <p>Lowest number is highest priority, use <code>0</code> to disable a particular function.</p>
 
         <form method="post">
-            {% for flow in supportedFlows %}
-                {% if flow.id == active %}
-                    <button name="flow" type="submit" value="{{ flow.id|e }}" disabled="disabled">{{ flow.name|e }}</button>
-                {% else %}
-                    <button class="info" name="flow" type="submit" value="{{ flow.id|e }}">{{ flow.name|e }}</button>
-                {% endif %}
+            {% for location in supportedLocations %}
+                <label><input type="text" name="{{ location.id|e }}" value="0">{{ location.name|e }}</label>
             {% endfor %}
+            <button class="info" type="submit">Configure</button>
         </form>
 
         </div> <!-- /container -->
