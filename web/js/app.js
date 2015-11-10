@@ -10,9 +10,14 @@ $(document).ready(function() {
             hoverClass: "ui-state-hover",
             accept: ":not(.ui-sortable-helper)",
             drop: function(event, ui) {
-                $(this).find(".placeholder").hide();
-                $(ui.draggable).addClass("addedToFav").clone().appendTo(this);
-                changeHandler();
+                var elementsAlreadyThere = $("#sortable2").sortable("toArray");
+
+                var isFound = $.inArray(ui.draggable.attr('uuid'), elementsAlreadyThere) !== -1;
+                if(!isFound) {
+                    $(this).find(".placeholder").hide();
+                    $(ui.draggable).addClass("addedToFav").clone().appendTo(this);
+                    changeHandler();
+                }
             }
         }).sortable({
             items: "li:not(.placeholder)",
