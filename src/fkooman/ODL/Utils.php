@@ -13,6 +13,14 @@ class Utils
 
         foreach (glob($dataDir.'/*.json') as $fileName) {
             $flowNameTable = basename($fileName, '.json');
+
+            if(0 === strpos($flowNameTable, 'loop')) {
+                continue;
+            }
+            if(0 === strpos($flowNameTable, 'delete')) {
+                continue;
+            }
+
             list($flowName, $table) = explode('-', $flowNameTable);
             $locations = explode('_', $flowName);
             foreach ($locations as $location) {
