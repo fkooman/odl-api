@@ -77,7 +77,7 @@ try {
                 foreach ($tables as $table) {
                     $fileName = sprintf('%s/%s-%s.json', $dataDir, $flowName, $table);
                     $apiData = $io->readFile($fileName);
-                    $output .= sprintf('%s: %s'.PHP_EOL, basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
+                    $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
                 }
             }
 

@@ -12,11 +12,13 @@ $(document).ready(function() {
             drop: function(event, ui) {
                 $(this).find(".placeholder").hide();
                 $(ui.draggable).addClass("addedToFav").clone().appendTo(this);
+                changeHandler();
             }
         }).sortable({
             items: "li:not(.placeholder)",
             sort: function() {
                 $(this).removeClass("ui-state-default");
+//                changeHandler();
             }
         });
     });
@@ -41,6 +43,7 @@ $(document).ready(function() {
                 }
             })
         }
+        changeHandler();
     });
     /* Click Close Icon to Remove from Drop Here Container */
     $("ul.h-droped-list").on('click', 'li .fa-star-o', function() {
@@ -57,6 +60,7 @@ $(document).ready(function() {
             var $lastItem = $($dropList.children()[0]);
             $lastItem.hasClass("placeholder") && $lastItem.show();
         }
+        changeHandler();
     });
     /* Hide Placeholder if it has Items or Show if it is empty */
     if ($(".header-favorites ul li:not(.placeholder)").length > 0) {
@@ -64,7 +68,9 @@ $(document).ready(function() {
     } else {
         $(".header-favorites ul li.placeholder").show();
     }
-    $("button#createPath").click(function() {
+
+    var changeHandler = function()
+    {
         var idsInOrder = $("#sortable2").sortable("toArray");
         var formData = new FormData();
         formData.append("flow", idsInOrder.join('_'));
@@ -74,5 +80,5 @@ $(document).ready(function() {
         });
         request.open("POST", "");
         request.send(formData);
-    });
+    };
 });

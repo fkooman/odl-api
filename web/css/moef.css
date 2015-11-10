@@ -98,3 +98,8 @@ ul,li
 {
 	content: "\f00d";
 }
+
+div#output {
+    opacity: 0.9;
+    background-color: #eee;
+}
