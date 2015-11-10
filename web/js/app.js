@@ -18,7 +18,9 @@ $(document).ready(function() {
             items: "li:not(.placeholder)",
             sort: function() {
                 $(this).removeClass("ui-state-default");
-//                changeHandler();
+            },
+            update: function() {
+                changeHandler();                
             }
         });
     });

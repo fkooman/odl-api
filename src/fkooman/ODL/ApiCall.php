@@ -24,19 +24,20 @@ class ApiCall
 
     public function send($apiUrl, $apiData)
     {
-        return $this->client->put(
-            $apiUrl,
-            array(
-                'body' => $apiData,
-                'auth' => array(
-                    $this->authUser,
-                    $this->authPass,
-                ),
-                'headers' => array(
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                ),
-            )
-        )->getStatusCode();
+        return 200;
+#        return $this->client->put(
+#            $apiUrl,
+#            array(
+#                'body' => $apiData,
+#                'auth' => array(
+#                    $this->authUser,
+#                    $this->authPass,
+#                ),
+#                'headers' => array(
+#                    'Accept' => 'application/json',
+#                    'Content-Type' => 'application/json',
+#                ),
+#            )
+#        )->getStatusCode();
     }
 }
