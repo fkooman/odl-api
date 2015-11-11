@@ -76,7 +76,7 @@ try {
                 if ('loop' === $flowName) {
                     $fileName = sprintf('%s/loop.json', $dataDir);
                     $apiData = $io->readFile($fileName);
-                    $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.'/0', $apiData));
+                    $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.'0', $apiData));
                 } else {
                     $tables = array('0', '2', '3', '10');
                     foreach ($tables as $table) {
