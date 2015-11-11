@@ -14,10 +14,10 @@ class Utils
         foreach (glob($dataDir.'/*.json') as $fileName) {
             $flowNameTable = basename($fileName, '.json');
 
-            if(0 === strpos($flowNameTable, 'loop')) {
+            if (0 === strpos($flowNameTable, 'loop')) {
                 continue;
             }
-            if(0 === strpos($flowNameTable, 'delete')) {
+            if (0 === strpos($flowNameTable, 'delete')) {
                 continue;
             }
 

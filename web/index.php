@@ -73,11 +73,17 @@ try {
                 $output = 'No flow specified!';
             } else {
                 $output = '';
-                $tables = array('0', '2', '3', '10');
-                foreach ($tables as $table) {
-                    $fileName = sprintf('%s/%s-%s.json', $dataDir, $flowName, $table);
+                if ('loop' === $flowName) {
+                    $fileName = sprintf('%s/loop.json', $dataDir);
                     $apiData = $io->readFile($fileName);
-                    $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
+                    $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.'/0', $apiData));
+                } else {
+                    $tables = array('0', '2', '3', '10');
+                    foreach ($tables as $table) {
+                        $fileName = sprintf('%s/%s-%s.json', $dataDir, $flowName, $table);
+                        $apiData = $io->readFile($fileName);
+                        $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
+                    }
                 }
             }
 

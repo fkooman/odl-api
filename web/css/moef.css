@@ -103,3 +103,21 @@ div#output {
     opacity: 0.9;
     background-color: #eee;
 }
+
+button#reset, button#loop {
+    border: 1px solid #000;
+    background-color: #eee;
+    font-size: 125%;
+    padding: 0.3em;
+    float: left;
+    margin: 0.5em;
+    font-weight: bold;
+}
+
+button#reset {
+    color: #c00;
+}
+
+button#loop {
+    color: #080;
+}
