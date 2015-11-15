@@ -72,19 +72,7 @@ try {
             if (null === $flowName || empty($flowName)) {
                 $output = 'No flow specified!';
             } else {
-                $output = '';
-                if ('loop' === $flowName) {
-                    $fileName = sprintf('%s/loop.json', $dataDir);
-                    $apiData = $io->readFile($fileName);
-                    $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.'0', $apiData));
-                } else {
-                    $tables = array('0', '2', '3', '10');
-                    foreach ($tables as $table) {
-                        $fileName = sprintf('%s/%s-%s.json', $dataDir, $flowName, $table);
-                        $apiData = $io->readFile($fileName);
-                        $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
-                    }
-                }
+                $output = setFlow($request, $io, $dataDir, $apiCall, $apiUrl, $flowName);
             }
 
             return $output;
@@ -96,4 +84,30 @@ try {
     echo '<pre>'.$e->getMessage().'</pre>';
     echo '<hr>';
     echo '<pre>'.$e->getTraceAsString().'</pre>';
+}
+
+function setFlow($request, $io, $dataDir, $apiCall, $apiUrl, $flowName)
+{
+    $output = '';
+    // first do a reset, wait 1 second, continue
+    $tables = array('0', '2', '3', '10');
+    foreach ($tables as $table) {
+        $fileName = sprintf('%s/%s-%s.json', $dataDir, 'delete-all-table', $table);
+        $apiData = $io->readFile($fileName);
+        $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
+    }
+    sleep(1);
+    if ('loop' === $flowName) {
+        $fileName = sprintf('%s/loop.json', $dataDir);
+        $apiData = $io->readFile($fileName);
+        $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.'0', $apiData));
+    } else {
+        foreach ($tables as $table) {
+            $fileName = sprintf('%s/%s-%s.json', $dataDir, $flowName, $table);
+            $apiData = $io->readFile($fileName);
+            $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
+        }
+    }
+
+    return $output;
 }
