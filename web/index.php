@@ -96,7 +96,7 @@ function setFlow($request, $io, $dataDir, $apiCall, $apiUrl, $flowName)
         $apiData = $io->readFile($fileName);
         $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
     }
-    sleep(0.1);
+    sleep(1);
     if ('loop' === $flowName) {
         $fileName = sprintf('%s/loop.json', $dataDir);
         $apiData = $io->readFile($fileName);
