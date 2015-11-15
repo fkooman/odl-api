@@ -92,26 +92,30 @@ $(document).ready(function() {
         sendFormPost('delete-all-table');
     });
 
-    $("button#loop").click(function() {
-        // XXX remove everything from list
-        $("#sortable2").children('li:not(.placeholder)').each(function(index, item) {
-            item.remove();
-        });
-        // remove addedToFav classes
-        $('#catalog ul').children('li').each(function(index, item) {
-            var $elem = $(item);
-            $elem.removeClass('addedToFav');
-        });
+//    $("button#loop").click(function() {
+//        // XXX remove everything from list
+//        $("#sortable2").children('li:not(.placeholder)').each(function(index, item) {
+//            item.remove();
+//        });
+//        // remove addedToFav classes
+//        $('#catalog ul').children('li').each(function(index, item) {
+//            var $elem = $(item);
+//            $elem.removeClass('addedToFav');
+//        });
 
-        $dropedList = $(".h-droped-list");
-        $dropedList.find(".placeholder").show();
-        sendFormPost('loop');
-    });
+//        $dropedList = $(".h-droped-list");
+//        $dropedList.find(".placeholder").show();
+//        sendFormPost('loop');
+//    });
 
     var changeHandler = function()
     {
         var idsInOrder = $("#sortable2").sortable("toArray");
-        sendFormPost(idsInOrder.join('_'));
+        if(0 === idsInOrder.length) {
+            sendFormPost('loop');
+        } else {
+            sendFormPost(idsInOrder.join('_'));
+        }
     };
 
     var sendFormPost = function(flow) {
