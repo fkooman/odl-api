@@ -100,19 +100,13 @@ ul,li
 }
 
 div#output {
-    opacity: 0.9;
+    margin-top: 0.5em;
+    opacity: 0.8;
     background-color: #eee;
 }
 
 button#reset, button#loop {
     display: inline;
-/*    border: 1px solid #000;*/
-/*    background-color: #eee;*/
-/*    font-size: 125%;*/
-/*    padding: 0.3em;*/
-/*    float: left;*/
-/*    margin: 0.5em;*/
-/*    font-weight: bold;*/
 }
 
 button#reset {
