@@ -91,11 +91,11 @@ function setFlow($request, $io, $dataDir, $apiCall, $apiUrl, $flowName)
     $output = '';
     // first do a reset, wait 1 second, continue
     $tables = array('0', '2', '3', '10');
-    foreach ($tables as $table) {
-        $fileName = sprintf('%s/%s-%s.json', $dataDir, 'delete-all-table', $table);
-        $apiData = $io->readFile($fileName);
-        $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
-    }
+    //foreach ($tables as $table) {
+    //    $fileName = sprintf('%s/%s-%s.json', $dataDir, 'delete-all-table', $table);
+    //    $apiData = $io->readFile($fileName);
+    //    $output .= sprintf('%s: %s<br>', basename($fileName, '.json'), $apiCall->send($apiUrl.$table, $apiData));
+    //}
     //sleep(1);
     if ('loop' === $flowName) {
         $fileName = sprintf('%s/loop.json', $dataDir);
