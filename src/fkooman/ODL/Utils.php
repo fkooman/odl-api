@@ -46,11 +46,11 @@ class Utils
             case 'Okeanos':
                 return 'TBD';
             case 'SURFnet':
-                return 'flip';
-            case 'SURFsara':
                 return 'grayscale';
+            case 'SURFsara':
+                return 'flip';
             case 'perfSONAR':
-                return 'TBD';
+                return 'mirror';
             default:
                 return '?';
         }
