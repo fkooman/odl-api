@@ -25,12 +25,34 @@ class Utils
             $locations = explode('_', $flowName);
             foreach ($locations as $location) {
                 if (!array_key_exists($location, $supportedLocations)) {
+                    $function = self::locationToFunction($location);
                     $supportedLocations[$location]['id'] = $location;
                     $supportedLocations[$location]['name'] = $location;
+                    $supportedLocations[$location]['function'] = $function;
                 }
             }
         }
 
         return $supportedLocations;
+    }
+
+    public static function locationToFunction($location)
+    {
+        switch ($location) {
+            case 'CloudSigma':
+                return 'text';
+            case 'Microsoft':
+                return 'TBD';
+            case 'Okeanos':
+                return 'TBD';
+            case 'SURFnet':
+                return 'flip';
+            case 'SURFsara':
+                return 'grayscale';
+            case 'perfSONAR':
+                return 'TBD';
+            default:
+                return '?';
+        }
     }
 }

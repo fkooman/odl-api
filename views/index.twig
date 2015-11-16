@@ -36,7 +36,7 @@
             <div id="catalog">
                 <ul class="rp-draggable">
                     {% for location in supportedLocations %}
-                    <li uuid="{{ location.id|e }}" id="{{ location.id|e }}"><img alt="{{ location.id|e }}" title="{{ location.id|e }}" width="150" src="img/{{ location.id|e }}.png"/> <i class="fa fa-star-o"></i></li>
+                    <li uuid="{{ location.id|e }}" id="{{ location.id|e }}"><img alt="{{ location.id|e }}" title="{{ location.id|e }}" width="150" src="img/{{ location.id|e }}.png"/> ({{ location.function|e }}) <i class="fa fa-star-o"></i></li>
                     {% endfor %}
                 </ul>
             </div>
